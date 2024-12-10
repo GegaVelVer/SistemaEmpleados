@@ -1,0 +1,41 @@
+CREATE TABLE Departamentos (
+    DepartamentoID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Ubicacion VARCHAR(100)
+);
+
+CREATE TABLE Empleados (
+    EmpleadoID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Email VARCHAR(100),
+    Telefono VARCHAR(15),
+    FechaContratacion DATE,
+    Salario DECIMAL(10,2),
+    DepartamentoID INT FOREIGN KEY REFERENCES Departamentos(DepartamentoID)
+);
+
+-- Procedimientos almacenados
+CREATE PROCEDURE sp_InsertarEmpleado
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Email VARCHAR(100),
+    @Telefono VARCHAR(15),
+    @Salario DECIMAL(10,2),
+    @DepartamentoID INT
+AS
+BEGIN
+    INSERT INTO Empleados (Nombre, Apellido, Email, Telefono, FechaContratacion, Salario, DepartamentoID)
+    VALUES (@Nombre, @Apellido, @Email, @Telefono, GETDATE(), @Salario, @DepartamentoID);
+END
+GO
+
+-- Datos de prueba
+INSERT INTO Departamentos (Nombre, Ubicacion) VALUES 
+('IT', 'Piso 1'),
+('RRHH', 'Piso 2'),
+('Ventas', 'Piso 3');
+
+
+Select * from Departamentos;
+	Select * from empleados;
